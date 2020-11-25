@@ -1,0 +1,28 @@
+{
+  "escolas": [
+      {
+        "id": 1,
+        "nome": "Adolfo Basile, Professor",
+        "endereco": "Estrada Elias Gabriel da Silva, S/N",
+        "tipo": "EI",
+        "bairro": "Grand Park",
+        "loteamento": "Vale do Sol",
+        "regiao": "Norte",
+        "telefone": ["3415-3121"],
+        "latitude": "-22.6814745",
+        "longitude": "-47.7149584"
+      },
+      {
+        "id": 2,
+        "nome": "Alberto Thomazi, Professor",
+        "endereco": "Rua Batatais, nº 381",
+        "tipo": "EI",
+        "bairro": "Guamium",
+        "loteamento": "Parque São Jorge",
+        "regiao": "Norte",
+        "telefone": ["3421-0166"],
+        "latitude": "-22.6657206",
+        "longitude": "-47.625144"
+      }
+    ]
+}
