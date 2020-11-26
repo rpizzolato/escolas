@@ -33,3 +33,9 @@
 #main-container .leaflet-container {
   z-index: 5;
 }
+
+#main-container .map-popup .leaflet-popup-content {
+  color: #03A8FB;
+
+  
+}

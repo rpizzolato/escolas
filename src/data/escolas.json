@@ -9,8 +9,8 @@
         "loteamento": "Vale do Sol",
         "regiao": "Norte",
         "telefone": ["3415-3121"],
-        "latitude": "-22.6814745",
-        "longitude": "-47.7149584"
+        "latitude": -22.6814745,
+        "longitude": -47.7149584
       },
       {
         "id": 2,
@@ -21,8 +21,8 @@
         "loteamento": "Parque São Jorge",
         "regiao": "Norte",
         "telefone": ["3421-0166"],
-        "latitude": "-22.6657206",
-        "longitude": "-47.625144"
+        "latitude": -22.6655202,
+        "longitude": -47.6251765
       }
     ]
 }
