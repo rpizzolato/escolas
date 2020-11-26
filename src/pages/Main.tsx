@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import Autosuggest from 'react-autosuggest';
 
 import '../styles/pages/main.css';
 import 'leaflet/dist/leaflet.css';
@@ -7,40 +8,26 @@ import 'leaflet/dist/leaflet.css';
 import mapMarkerIcon from '../assets/mapMarkerIcon';
 
 import data from '../data/escolas.json';
-import { LeafletMouseEvent } from 'leaflet';
 
 export default function Main() {
 
-  function AddMarkerToClick() {
-    const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [schools, setSchools] = useState([{}]);
 
-    const map = useMapEvents({
-      click(event: LeafletMouseEvent) {
-        const { lat, lng } = event.latlng;
-        setPosition({
-          latitude: lat,
-          longitude: lng,
-        });
-        console.log(position);
-      }
-    })
+  function handleFilterSchools(event: any) {
+    const { value } = event.target;
 
-    return(
-      position.latitude !== 0 ?
-      (
-        <Marker 
-          position={[position.latitude, position.longitude]}
-          icon={mapMarkerIcon}/>
-      ) :
-      null
-    );
+    const filtered = data.escolas.filter(escola => escola.nome.toLowerCase().indexOf(value.toLowerCase()) > -1);
+
+    console.log(filtered);
+
+    setSchools(filtered);
   }
 
   return (
 
     <div id="main-container">
       <aside>
-        <input type="text" placeholder="Entre com o nome da escola"/>
+        <input type="text" placeholder="Entre com o nome da escola" onChange={handleFilterSchools}/>
       </aside>
 
       <MapContainer
@@ -66,8 +53,6 @@ export default function Main() {
               </Marker>
             )
         })}
-
-        <AddMarkerToClick/>
 
       </MapContainer>
     </div>

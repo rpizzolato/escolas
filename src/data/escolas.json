@@ -9,8 +9,8 @@
         "loteamento": "Vale do Sol",
         "regiao": "Norte",
         "telefone": ["3415-3121"],
-        "latitude": -22.6814745,
-        "longitude": -47.7149584
+        "latitude": -22.681181732296178,
+        "longitude": -47.71482566976919
       },
       {
         "id": 2,
@@ -21,8 +21,32 @@
         "loteamento": "Parque São Jorge",
         "regiao": "Norte",
         "telefone": ["3421-0166"],
-        "latitude": -22.6655202,
-        "longitude": -47.6251765
+        "latitude": -22.66557782477395,
+        "longitude": -47.62521362476794
+      },
+      {
+        "id": 3,
+        "nome": "Almir de Souza Maia",
+        "endereco": "Rua Corcovado, nº 4005",
+        "tipo": "EI",
+        "bairro": "Parque dos Ipês",
+        "loteamento": "Parque dos Ipês",
+        "regiao": "Norte",
+        "telefone": ["3415-3138"],
+        "latitude": -22.662734880319537,
+        "longitude": -47.713334810952055
+      },
+      {
+        "id": 4,
+        "nome": "Anna Maria Fontabelli Avansi, Professora",
+        "endereco": "Rua Dona Irma Rosseto Pexe, nº 1491",
+        "tipo": "EI",
+        "bairro": "Mario Dedini",
+        "loteamento": "Jardim Gilda",
+        "regiao": "Norte",
+        "telefone": ["3413-7133"],
+        "latitude": -22.66167253292564,
+        "longitude": -47.65693907541607
       }
     ]
 }
