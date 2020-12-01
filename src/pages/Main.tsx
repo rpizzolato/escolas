@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import Autosuggest from 'react-autosuggest';
+import AutoSuggest from 'react-autosuggest';
 
 import '../styles/pages/main.css';
 import 'leaflet/dist/leaflet.css';
@@ -11,16 +11,20 @@ import data from '../data/escolas.json';
 
 export default function Main() {
 
-  const [schools, setSchools] = useState([{}]);
+  //const [schools, setSchools] = useState([{}]);
+  const [value, setValue] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  function handleFilterSchools(event: any) {
-    const { value } = event.target;
+  function handleFilterSchools(event: React.FormEvent<HTMLInputElement>) {
+    const search = event.currentTarget.value;
 
-    const filtered = data.escolas.filter(escola => escola.nome.toLowerCase().indexOf(value.toLowerCase()) > -1);
+    const filtered = data.escolas.filter(escola => escola.nome.toLowerCase().includes(search.toString().toLowerCase()));
 
-    console.log(filtered);
+    const schoolNames: string[] = filtered.map(obj => obj.nome);
 
-    setSchools(filtered);
+    setSuggestions(schoolNames)
+    
+    console.log(suggestions);
   }
 
   return (
@@ -29,6 +33,8 @@ export default function Main() {
       <aside>
         <input type="text" placeholder="Entre com o nome da escola" onChange={handleFilterSchools}/>
       </aside>
+
+
 
       <MapContainer
         center={[-22.7244976,-47.6352641]}
