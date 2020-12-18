@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import AutoSuggest from 'react-autosuggest';
 
 import '../styles/pages/main.css';
@@ -9,37 +9,45 @@ import mapMarkerIcon from '../assets/mapMarkerIcon';
 
 import data from '../data/escolas.json';
 
+interface SchoolAndLocation {
+  name: string,
+  location: number[]
+}
+
 export default function Main() {
 
-  //const [schools, setSchools] = useState([{}]);
+  const [flyValue, setFlyValue] = useState<number[]>([]);
   const [value, setValue] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<SchoolAndLocation[]>([]);
 
-  const lowerCasedSchoolsName = data.escolas.map(escola => escola.nome.toLowerCase());
+  const schoolAndLocation = data.escolas.map(escola => {
+    return {
+      name: escola.nome.toLowerCase(),
+      location: [
+        escola.latitude,
+        escola.longitude
+      ]
+    }
+  })
 
-  console.log(lowerCasedSchoolsName);
+  function getSuggestions(value: string): SchoolAndLocation[] {
 
-  function getSuggestions(value: string): string[] {
-    return lowerCasedSchoolsName.filter(school => school.includes(value.trim().toLowerCase()));
+    return schoolAndLocation.filter(school => school.name.includes(value.trim().toLowerCase()));
   }
 
-  function handleFilterSchools(event: React.FormEvent<HTMLInputElement>) {
-    const search = event.currentTarget.value;
+  function FlyToComponent() {
+    const map = useMap();
+    const [lat, lng] = flyValue;
 
-    const filtered = data.escolas.filter(escola => escola.nome.toLowerCase().includes(search.toString().toLowerCase()));
+    flyValue.length === 0 ? console.log('vazio') : map.flyTo([lat,lng], 18)
 
-    const schoolNames: string[] = filtered.map(obj => obj.nome);
-
-    setSuggestions(schoolNames)
-    
-    console.log(suggestions);
+    return null;
   }
 
   return (
 
     <div id="main-container">
       <aside>
-        {/* <input type="text" placeholder="Entre com o nome da escola" onChange={handleFilterSchools}/> */}
         <AutoSuggest
           suggestions={suggestions}
           onSuggestionsClearRequested={() => setSuggestions([])}
@@ -47,13 +55,17 @@ export default function Main() {
             setValue(value);
             setSuggestions(getSuggestions(value));
           }}
-          onSuggestionSelected={(_, { suggestionValue }) =>
-            console.log("Selected: " + suggestionValue)
+            onSuggestionSelected={(_, { suggestionValue, suggestion }) => {
+              console.log("Selected: " + suggestionValue)
+              const [lat, lng] = suggestion.location;
+              setFlyValue([lat, lng])
+            
+            }
           }
-          getSuggestionValue={suggestion => suggestion}
-          renderSuggestion={suggestion => <span>{suggestion}</span>}
+          getSuggestionValue={suggestion => suggestion.name}
+          renderSuggestion={suggestion => <span>{suggestion.name}</span>}
           inputProps={{
-            placeholder: "Type 'c'",
+            placeholder: "Digite o nome da escola",
             value: value,
             onChange: (_, { newValue, method }) => {
               setValue(newValue);
@@ -63,12 +75,12 @@ export default function Main() {
         />
       </aside>
 
-
-
       <MapContainer
         center={[-22.7244976,-47.6352641]}
         zoom={12.5}
         style={{ width: '100%', height: '100%' }}>
+
+          <FlyToComponent />
 
         <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
